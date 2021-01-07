@@ -169,7 +169,7 @@ names: ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 't
 cd ScaledYOLOv4
 
 conda activate scaled-yolov4
-pip install tqdm
+pip install opencv-python pyyaml scipy tqdm
 
 python test.py \
 --img 896 \
@@ -191,4 +191,29 @@ Scanning labels coco2017_yolov5/labels/val2017.cache (4952 found, 0 missing, 48 
                Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|█████████████████████████████████████████| 625/625 [03:25<00:00,  3.04it/s]
                  all       5e+03    3.68e+04       0.456        0.76       0.687       0.494
 Speed: 35.8/1.6/37.5 ms inference/NMS/total per 896x896 image at batch-size 8
+```
+
+### 测试 YOLOv4-P7
+
+```bash
+python test.py \
+--img 1536 \
+--conf 0.001 \
+--batch 6 \
+--device 0 \
+--data data/coco2017_yolov5.yaml \
+--weights weights/yolov4-p7.pt
+```
+
+结果如下：
+
+```bash
+Namespace(augment=False, batch_size=6, conf_thres=0.001, data='data/coco2017_yolov5.yaml', device='0', img_size=1536, iou_thres=0.65, merge=False, save_json=False, save_txt=False, single_cls=False, task='val', verbose=False, weights=['weights/yolov4-p7.pt'])
+Using CUDA device0 _CudaDeviceProperties(name='GeForce RTX 2080 Ti', total_memory=11016MB)
+
+Fusing layers... Model Summary: 503 layers, 2.87475e+08 parameters, 2.7862e+08 gradients
+Scanning labels coco2017_yolov5/labels/val2017.cache (4952 found, 0 missing, 48 empty, 0 duplicate, for 5000 im
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|█| 834/834 [
+                 all       5e+03    3.68e+04       0.435       0.804       0.719       0.531
+Speed: 78.5/1.6/80.1 ms inference/NMS/total per 1536x1536 image at batch-size 6
 ```
