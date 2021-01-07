@@ -12,9 +12,9 @@
 
 - Nvidia 显卡的主机
 - Ubuntu 18.04
-  - 系统安装，可见 [制作 USB 启动盘，及系统安装]()
+  - 系统安装，可见 [制作 USB 启动盘，及系统安装](https://mp.weixin.qq.com/s/HHXh0GKaxfaUdemcL2IdRQ)
 - Nvidia Driver
-  - 驱动安装，可见 [Ubuntu 初始配置 - Nvidia 驱动]()
+  - 驱动安装，可见 [Ubuntu 初始配置 - Nvidia 驱动](https://mp.weixin.qq.com/s/czgD2CQOnOZ_eslrRkq6LA)
 
 ### 开发环境
 
