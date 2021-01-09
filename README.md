@@ -370,7 +370,44 @@ python train.py \
 
 ![](images/train.png)
 
-内容如下：
+如要恢复训练：
+
+```bash
+python train.py \
+--batch-size 2 \
+--img 1280 1280 \
+--data data/coco2017_yolov5_subset.yaml \
+--cfg models/coco2017_yolov5_subset/yolov4-p6.yaml \
+--weights 'runs/exp0_yolov4-p6/weights/last.pt' \
+--sync-bn \
+--device 0,1 \
+--name yolov4-p6 \
+--resume
+```
+
+#### 错误 `RuntimeError: main thread is not in main loop`
+
+```bash
+Exception ignored in: <function Image.__del__ at 0x7f609bf9bd30>
+Traceback (most recent call last):
+  File "/home/john/anaconda3/envs/scaled-yolov4/lib/python3.8/tkinter/__init__.py", line 4014, in __del__
+    self.tk.call('image', 'delete', self.name)
+RuntimeError: main thread is not in main loop
+Tcl_AsyncDelete: async handler deleted by the wrong thread
+Aborted (core dumped)
+```
+
+如果发生此错误，可于 `train.py` `__main__` 修改 GUI 的 `backend`：
+
+```bash
+if __name__ == '__main__':
+    import matplotlib.pyplot as plt
+    plt.switch_backend("agg")
+```
+
+### 训练指标
+
+训练完成后，内容如下：
 
 ```bash
 runs/exp0_yolov4-p6/
@@ -393,25 +430,22 @@ runs/exp0_yolov4-p6/
     └── last_yolov4-p6_strip.pt
 ```
 
-#### 错误 `RuntimeError: main thread is not in main loop`
+- `labels.png`: 标注分布图
+- `results.png`: 训练过程图
+- `results.txt`: 训练过程日志
+
+`results.png` 要训练完成后才有，如果训练过程中要查看，可用 `tensorboard`：
 
 ```bash
-Exception ignored in: <function Image.__del__ at 0x7f609bf9bd30>
-Traceback (most recent call last):
-  File "/home/john/anaconda3/envs/scaled-yolov4/lib/python3.8/tkinter/__init__.py", line 4014, in __del__
-    self.tk.call('image', 'delete', self.name)
-RuntimeError: main thread is not in main loop
-Tcl_AsyncDelete: async handler deleted by the wrong thread
-Aborted (core dumped)
+$ tensorboard --logdir runs
+TensorFlow installation not found - running with reduced feature set.
+Serving TensorBoard on localhost; to expose to the network, use a proxy or pass --bind_all
+TensorBoard 2.4.0 at http://localhost:6006/ (Press CTRL+C to quit)
 ```
 
-如果发生此错误，可于 `train.py` `__main__` 修改 GUI 的 `backend`：
+打开 `http://localhost:6006/` 可见：
 
-```bash
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-    plt.switch_backend("agg")
-```
+![](images/tensorboard.png)
 
 ### 测试模型
 
